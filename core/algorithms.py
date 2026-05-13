@@ -1,42 +1,86 @@
-from collections import deque
-import heapq
-from core.graph_data import edges
+from core.graph_data import edges, nodes
 
 def get_neighbors(node):
     return edges.get(node, {})
 
 def run_bfs(start, goal):
-    queue = deque([(start, [start])])
-    seen = {start}
+    queue = []
+    queue.append([start]) 
     
-    while queue:
-        current, path = queue.popleft()
+    visited = [] 
+    
+    while len(queue) > 0:
+        path = queue.pop(0) 
+        current = path[-1]
+        
         if current == goal:
             return path
             
-        for neighbor in get_neighbors(current):
-            if neighbor not in seen:
-                seen.add(neighbor)
-                # path lama + node baru
-                queue.append((neighbor, path + [neighbor]))
+        if current not in visited:
+            visited.append(current)
+            
+            # Looping tetangga
+            for neighbor in get_neighbors(current):
+                if neighbor not in visited:
+                    # Bikin list rute baru
+                    new_path = list(path)
+                    new_path.append(neighbor)
+                    queue.append(new_path)
+                    
     return []
 
 def run_dijkstra(start, goal):
-    # Priority Queue: (total_cost, current_node, path)
-    queue = [(0, start, [start])]
-    seen = set()
     
-    while queue:
-        cost, current, path = heapq.heappop(queue)
+    distances = {}
+    parent = {}
+    unvisited = []
+    
+    # Inisialisasi semua node dengan jarak 
+    for node in nodes:
+        distances[node] = float('inf')
+        unvisited.append(node)
         
-        if current in seen: 
-            continue
-        seen.add(current)
+    distances[start] = 0
+    
+    while len(unvisited) > 0:
+        # Cari node dengan jarak terpendek 
+        min_dist = float('inf')
+        current = None
         
-        if current == goal:
-            return path
+        for node in unvisited:
+            if distances[node] < min_dist:
+                min_dist = distances[node]
+                current = node
+                
+        #  stop jika smpai tujuan
+        if current is None or current == goal:
+            break
             
+        unvisited.remove(current)
+        
+        # Cek dan update jarak tetangga
         for neighbor, weight in get_neighbors(current).items():
-            if neighbor not in seen:
-                heapq.heappush(queue, (cost + weight, neighbor, path + [neighbor]))
+            if neighbor in unvisited:
+                new_distance = distances[current] + weight
+                
+                #  update jarak 
+                if new_distance < distances[neighbor]:
+                    distances[neighbor] = new_distance
+                    parent[neighbor] = current
+                    
+    # Backtracking
+    path = []
+    curr = goal
+    
+
+    if curr in parent or curr == start:
+        while curr is not None:
+            path.append(curr)
+            curr = parent.get(curr) 
+            
+    path.reverse() #
+    
+    if len(path) > 0 and path[0] == start:
+        return path
+        
     return []
