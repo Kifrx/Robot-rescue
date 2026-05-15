@@ -1,45 +1,47 @@
 # Robot Rescue Pathfinding
 
-Proyek ini ialah simulasi visualisasi *pathfinding* (pencarian jalur) berbasis *Weighted Graph* menggunakan Python dan Pygame. Program ini mensimulasikan sebuah robot penyelamat yang harus mengevakuasi 3 orang korban yang tersebar di dalam area berukuran 6x6 *node*.
+This project is a pathfinding visualization simulation based on a Weighted Graph using Python and Pygame. The program simulates a rescue robot that must evacuate 3 victims scattered across a 6x6 node area.
 
-##  Algoritma yang Digunakan
+## Algorithms Used
 
-Robot rescue ini memakai dua algoritma utama yang bisa dibandingkan secara langsung kinerjanya, yaitu:
+This rescue robot uses two main algorithms that can be directly compared in terms of performance:
 
-1. **Breadth-First Search (BFS):** Algoritma yang mencari rute berdasarkan **jumlah langkah (edge) paling sedikit**, tanpa mempedulikan bobot atau jarak sebenarnya antar *node*.
-2. **Dijkstra's Algorithm:** Algoritma pencarian rute terpendek yang memperhitungkan **total bobot (cost/jarak) paling kecil**, sehingga robot mungkin memilih jalur memutar jika bobotnya lebih ringan.
+1. **Breadth-First Search (BFS):**
+An algorithm that searches for routes based on the fewest number of steps (edges), without considering the actual weight or distance between nodes.
+2. **Dijkstra's Algorithm:**
+A shortest-path algorithm that considers the smallest total weight (cost/distance), allowing the robot to choose a longer route if the total cost is lower.
 
-**Logika Penyelamatan (Greedy Nearest Neighbor):**
-Karena ada 3 target korban, robot dilengkapi dengan kecerdasan *Greedy*. Dari posisinya berada, robot akan menghitung jarak ke semua korban yang tersisa, lalu secara otomatis memprioritaskan penyelamatan korban dengan rute paling "murah" (berdasarkan langkah untuk BFS, atau berdasarkan bobot untuk Dijkstra) terlebih dahulu.
+**Rescue Logic (Greedy Nearest Neighbor)**
+Since there are 3 victims to rescue, the robot is equipped with a Greedy strategy. From its current position, the robot calculates the distance to all remaining victims and automatically prioritizes rescuing the victim with the "cheapest" route first (based on steps for BFS, or total weight for Dijkstra).
 
----
+##  How to Run the Program
 
-##  Cara Menjalankan Program
+### Prerequisites
+Make sure Python 3.x is installed on your computer. This program also requires the external pygame library.
 
-### Prasyarat
-Pastikan kamu sudah menginstal Python 3.x di komputermu. Program ini juga membutuhkan *library* eksternal `pygame`.
+### Installation Steps
 
-### Langkah-langkah Instalasi
-1. *Clone repository* ini ke dalam mesin lokalmu:
-   ```bash
-   git clone [https://github.com/Kifrx/Robot-rescue.git](https://github.com/Kifrx/Robot-rescue.git)
-2. Masuk ke dalam direktori proyek:
-   ```
-   cd Robot-rescue
-   ```
-3. Instal dependencies Pygame:
-   ```
-   pip install -r requirements.txt
-   ```
-4. Jalankan program utamanya:
-   ```
-   python main.py
-   ```
+1. Clone this repository to your local machine:
+```
+git clone https://github.com/Kifrx/Robot-rescue.git
+```
+2. Navigate into the project directory:
+```
+cd Robot-rescue
+```
+3. Install the required dependencies:
+```
+pip install -r requirements.txt
+```
+4. Run the main program:
+```
+python main.py
+```
 
-## How to play??
-1. Saat program terbuka, klik salah satu lingkaran (*node*) untuk meletakkan **Robot**.
-2. Klik pada 3 *node* lainnya yang berbeda untuk meletakkan **Korban**.
-3. Perhatikan panel teks berwarna kuning di atas untuk panduan status saat ini.
-4. Setelah data lengkap, klik tombol **Jalankan BFS** atau **Jalankan Dijkstra**.
-5. Lihat animasi pergerakan robot dan perhatikan perbandingan statistik "Total Langkah" dan "Total Bobot" di bagian bawah layar.
-6. Klik tombol **Reset** untuk menghapus dan memulai ulang simulasi dari awal.
+## How to Play??
+1. When the program starts, click on one of the circles (nodes) to place the Robot.
+2. Click on 3 different nodes to place the Victims.
+3. Pay attention to the yellow text panel at the top for the current status instructions.
+4. After all positions are set, click either the Run BFS or Run Dijkstra button.
+5. Watch the robot movement animation and compare the statistics for Total Steps and Total Weight displayed at the bottom of the screen.
+6. Click the Reset button to clear and restart the simulation from the beginning.
