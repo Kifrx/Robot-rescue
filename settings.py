@@ -1,5 +1,5 @@
 # settings.py
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 800, 620
 FPS = 60
 
 # Definisi Warna (RGB)
